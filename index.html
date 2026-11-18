@@ -8,12 +8,12 @@
   </head>
   <body>
     <div class="game">
-      <h1>🃏짝 맞추기 게임</h1>
+      <h1>🪐짝 맞추기</h1>
       <!-- 점수판 -->
       <ul class="status">
         <li>시도: <strong class="tries">0</strong>번</li>
         <li>시간: <strong class="time">0</strong>초</li>
-        <li>점수: <strong class="best">0</strong></li>
+        <li>최고 기록: <strong class="best">0</strong></li>
       </ul>
       <!-- 보드판 -->
       <div class="board">
@@ -23,6 +23,7 @@
         </button>
       </div>
       <p class="message">카드를 눌러 시작하세요</p>
+      <div class="toast" role="status" aria-live="polite"></div>
       <button class="restart">다시하기</button>
     </div>
     <script src="js/app.js"></script>

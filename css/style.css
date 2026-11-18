@@ -15,9 +15,18 @@ button {
 }
 
 body {
-  background-color: #efefef;
+  min-height: 100vh;
+  /* 작은 점 몇 개로 별을 흉내 낸 밤하늘 */
+  background:
+    radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 70% 15%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 40% 80%, #fff, transparent),
+    radial-gradient(1px 1px at 85% 60%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 10% 70%, #fff, transparent),
+    radial-gradient(ellipse at top, #1b1f4b, #0b0d21 70%);
+  background-color: #0b0d21;
   font-family: "Pretendard", "Malgun Gothic", sans-serif;
-  color: #333;
+  color: #e6e8ff;
 }
 
 .game {
@@ -33,14 +42,14 @@ h1 {
 .status {
   display: flex;
   justify-content: space-between;
-  background-color: #fff;
+  background-color: rgba(255, 255, 255, 0.08);
   padding: 12px 20px;
   border-radius: 12px;
   font-size: 15px;
   margin-bottom: 20px;
 }
 .status strong {
-  color: #e8743b;
+  color: #c4b5fd;
   font-size: 18px;
 }
 .board {
@@ -49,6 +58,7 @@ h1 {
   gap: 12px;
 }
 .card {
+  background: none; /* 버튼 기본 회색 배경 제거 */
   height: 100px;
   position: relative;
   transform-style: preserve-3d;
@@ -69,13 +79,13 @@ h1 {
   backface-visibility: hidden;
 }
 .card .front {
-  background-color: #e8743b;
+  background-color: #8b5cf6;
   color: #fff;
   font-weight: bold;
 }
 .card .back {
-  border: 3px solid #e8743b;
-  background-color: #fff;
+  border: 3px solid #8b5cf6;
+  background-color: #151838;
   transform: rotateY(180deg);
 }
 .card:hover {
@@ -86,8 +96,8 @@ h1 {
   transform: rotateY(180deg);
 }
 .card.matched .back {
-  background-color: #d8f5d0;
-  border-color: #4caf50;
+  background-color: #1e3a5f;
+  border-color: #38bdf8;
 }
 .message {
   margin: 24px 0 12px;
@@ -99,11 +109,32 @@ h1 {
 .restart {
   padding: 10px 24px;
   border-radius: 20px;
-  background-color: #333;
+  background-color: #2a2f6b;
   color: #fff;
   font-size: 15px;
 }
 
+.toast {
+  position: fixed;
+  /* --dx, --rot: JS가 매번 랜덤으로 넣는 좌우 위치/각도 */
+  transform: translate(calc(-50% + var(--dx, 0px)), 0) rotate(var(--rot, 0deg));
+  color: #c4b5fd;
+  font-size: 13px;
+  font-weight: bold;
+  white-space: nowrap;
+  text-shadow: 0 0 6px rgba(139, 92, 246, 0.9);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.2s,
+    transform 0.3s;
+}
+/* 카드 위로 살짝 떠오름 */
+.toast.show {
+  opacity: 1;
+  transform: translate(calc(-50% + var(--dx, 0px)), -130%) rotate(var(--rot, 0deg));
+}
+
 .restart:hover {
-  background-color: #e8743b;
+  background-color: #8b5cf6;
 }

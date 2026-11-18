@@ -4,7 +4,25 @@ const timeText = document.querySelector(".time");
 const bestText = document.querySelector(".best");
 const message = document.querySelector(".message");
 const btnRestart = document.querySelector(".restart");
-const emojis = ["🍎", "🍌", "🍇", "🍓", "🍒", "🥝", "🍑", "🍍"];
+const toast = document.querySelector(".toast");
+const emojis = ["🚀", "🌙", "⭐", "🪐", "☄️", "🛸", "👽", "🌍"];
+const missTexts = ["이런!", "아깝다!", "다시 해봐!", "앗!"];
+const hitTexts = ["좋아!", "나이스!", "정답!", "굿!"];
+const TOAST_MS = 800;
+let toastId = null;
+
+// 카드 위쪽에 랜덤 각도·위치로 문구를 잠깐 띄움
+const showToast = (card, texts) => {
+  const rect = card.getBoundingClientRect();
+  toast.style.left = `${rect.left + rect.width / 2}px`;
+  toast.style.top = `${rect.top}px`;
+  toast.style.setProperty("--rot", `${random(-15, 15)}deg`);
+  toast.style.setProperty("--dx", `${random(-20, 20)}px`);
+  toast.textContent = texts[random(0, texts.length - 1)];
+  toast.classList.add("show");
+  clearTimeout(toastId);
+  toastId = setTimeout(() => toast.classList.remove("show"), TOAST_MS);
+};
 
 const makeCards = () => [...emojis, ...emojis];
 const render = (cards) => {
@@ -61,6 +79,7 @@ const check = () => {
   if (first.dataset.emoji === second.dataset.emoji) {
     first.classList.add("matched");
     second.classList.add("matched");
+    showToast(second, hitTexts);
     matchedCount++;
     resetPick();
     if (matchedCount === emojis.length) {
@@ -68,6 +87,7 @@ const check = () => {
     }
   } else {
     lock = true;
+    showToast(second, missTexts);
     flipBackId = setTimeout(() => {
       first.classList.remove("open");
       second.classList.remove("open");
@@ -154,6 +174,8 @@ const win = () => {
 
 const startGame = () => {
   clearTimeout(flipBackId);
+  clearTimeout(toastId);
+  toast.classList.remove("show");
   stopTimer();
   resetPick();
   tries = 0;
